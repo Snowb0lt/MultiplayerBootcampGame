@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private float playerTurnSpeed = 10f;
@@ -14,20 +15,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private string horizontalInput;
     [SerializeField] private string verticalInput;
 
-    private void Awake()
+
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         playerRb = GetComponent<Rigidbody>();
     }
 
 
     void Update()
     {
+        if (!IsOwner) return;
+
         horizontal = Input.GetAxis(horizontalInput);
         vertical = Input.GetAxis(verticalInput);
     }
 
     private void FixedUpdate()
     {
+        if(!IsOwner) return;
+
         playerRb.velocity = playerRb.transform.forward * playerSpeed * vertical;
         playerRb.rotation = Quaternion.Euler(transform.eulerAngles + transform.up * horizontal * playerTurnSpeed);
     }
