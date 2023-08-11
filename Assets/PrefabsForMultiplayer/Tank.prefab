@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47a5a23af260d842bc4241fc8d404c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4859396129478955504, guid: 102a7e3c4286ba24f8fdc5913bf57933, type: 3}
+  bullet: {fileID: 3901803667391397811, guid: 3e5f20d08c90bfa4a821c3732d3cab21, type: 3}
   shootSpeed: 80
   shootPoint: {fileID: 6203612175661474360}
   shootInput: 304
