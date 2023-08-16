@@ -27,14 +27,28 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        horizontal = Input.GetAxis(horizontalInput);
-        vertical = Input.GetAxis(verticalInput);
+        if (IsServer && IsLocalPlayer)
+        {
+            horizontal = Input.GetAxis(horizontalInput);
+            vertical = Input.GetAxis(verticalInput);
+        }
+        else if(IsClient && IsLocalPlayer)
+        {
+            Debug.Log("Calling RPC");
+            MovementServerRPC(Input.GetAxis(horizontalInput), Input.GetAxis(verticalInput));
+        }
+
+    }
+
+    [ServerRpc]
+    public void MovementServerRPC(float horizontal, float vertical)
+    {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
     }
 
     private void FixedUpdate()
     {
-        if(!IsOwner) return;
-
         playerRb.velocity = playerRb.transform.forward * playerSpeed * vertical;
         playerRb.rotation = Quaternion.Euler(transform.eulerAngles + transform.up * horizontal * playerTurnSpeed);
     }

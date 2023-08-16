@@ -20,14 +20,26 @@ public class PlayerShoot : NetworkBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (!IsOwner) return;
+    {   
         if (Input.GetKeyDown(shootInput))
-        {
-            Shoot();
+        {   
+            if(IsServer && IsLocalPlayer)
+            {
+                Shoot();
+            }
+            else if(IsClient && IsLocalPlayer)
+            {
+                //Ask the server to spawn a bullet and shoot!
+                RequestShootServerRPC();
+            }
         }
     }
 
+    [ServerRpc]
+    public void RequestShootServerRPC()
+    {
+        Shoot();
+    }
     private void Shoot()
     {
         GameObject tempBullet = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
