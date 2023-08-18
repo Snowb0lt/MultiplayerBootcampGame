@@ -25,7 +25,7 @@ public class PlayerShoot : NetworkBehaviour
         {   
             if(IsServer && IsLocalPlayer)
             {
-                Shoot();
+                Shoot(OwnerClientId);
             }
             else if(IsClient && IsLocalPlayer)
             {
@@ -36,16 +36,17 @@ public class PlayerShoot : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void RequestShootServerRPC()
+    public void RequestShootServerRPC(ServerRpcParams serverRpcParams = default)
     {
-        Shoot();
+        Shoot(serverRpcParams.Receive.SenderClientId);
     }
-    private void Shoot()
+    private void Shoot(ulong ownerID)
     {
         GameObject tempBullet = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
         tempBullet.GetComponent<NetworkObject>().Spawn();
+        tempBullet.GetComponent<Bullet>().clientID = ownerID;
 
         tempBullet.GetComponent<Rigidbody>().AddForce(playerRb.velocity + tempBullet.transform.forward * shootSpeed, ForceMode.VelocityChange);
-        Destroy(tempBullet, 5f);
+        Destroy(tempBullet, 2f);
     }
 }

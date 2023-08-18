@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174456676690373872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.633, z: 0.954}
+  m_LocalPosition: {x: 0, y: 0.633, z: 1.004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -126,8 +126,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.032386158, y: 0.048424292, z: 0.03058135}
-  m_Center: {x: 0.00023295033, y: -0.00605667, z: 0.007221442}
+  m_Size: {x: 0.032386158, y: 0.045922592, z: 0.03058135}
+  m_Center: {x: 0.00023295083, y: -0.004805807, z: 0.007221442}
 --- !u!1 &3032425534000848932
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 7369016702216538310}
   - component: {fileID: 3032425534000848934}
   - component: {fileID: 8297742559896789190}
+  - component: {fileID: -1807972305318591261}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -265,6 +266,18 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &-1807972305318591261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032425534000848932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056a1371bd2e13f4fbcced48d24f0182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7104499846767030100
 GameObject:
   m_ObjectHideFlags: 0
