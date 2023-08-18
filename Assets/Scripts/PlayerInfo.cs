@@ -28,6 +28,11 @@ public class PlayerInfo : NetworkBehaviour
 
         _txtPlayerName.SetText(playerName.Value.ToString());
         gameObject.name = "Player_" + playerName.Value.ToString();
+
+        if (IsLocalPlayer)
+        {
+            GameManager.Instance.SetLocalPlayer(NetworkObject);
+        }
     }
     public override void OnNetworkDespawn()
     {

@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 3032425534000848934}
   - component: {fileID: 8297742559896789190}
   - component: {fileID: -1807972305318591261}
+  - component: {fileID: 5937759987597308736}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -278,6 +279,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056a1371bd2e13f4fbcced48d24f0182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5937759987597308736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032425534000848932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 753a04b614e4ac248b7be7340265deab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _txtPlayerName: {fileID: 6609844682298812401}
+  playerName:
+    m_InternalValue:
+      utf8LengthInBytes: 10
+      bytes:
+        offset0000:
+          byte0000: 80
+          byte0001: 108
+          byte0002: 97
+          byte0003: 121
+          byte0004: 101
+          byte0005: 114
+          byte0006: 78
+          byte0007: 97
+          byte0008: 109
+          byte0009: 101
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0016:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0032:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0048: 0
+        byte0049: 0
+        byte0050: 0
+        byte0051: 0
+        byte0052: 0
+        byte0053: 0
+        byte0054: 0
+        byte0055: 0
+        byte0056: 0
+        byte0057: 0
+        byte0058: 0
+        byte0059: 0
+        byte0060: 0
+        byte0061: 0
 --- !u!1 &7104499846767030100
 GameObject:
   m_ObjectHideFlags: 0
