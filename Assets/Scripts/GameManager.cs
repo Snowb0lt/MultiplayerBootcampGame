@@ -99,7 +99,7 @@ public class GameManager : NetworkBehaviour
         if (IsServer)
         {
             playerScores[playerID]++;
-            //TO DO: Show UI
+            ShowScoreUI();
             CheckWinner(playerID);
         }
     }
