@@ -884,11 +884,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 197b3140-d939-449f-ad76-9f8e782bde38
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: TankWars
+  organizationId: multiplayergames
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
