@@ -29,8 +29,16 @@ public class PlayerMovement : NetworkBehaviour
 
         if (IsServer && IsLocalPlayer)
         {
-            horizontal = Input.GetAxis(horizontalInput);
-            vertical = Input.GetAxis(verticalInput);
+            if (GameManager.Instance._state.Value == 1)
+            {
+                this.horizontal = Input.GetAxis(horizontalInput);
+                this.vertical = Input.GetAxis(verticalInput);
+            }
+            else
+            {
+                this.horizontal = 0;
+                this.vertical = 0;
+            }
         }
         else if(IsClient && IsLocalPlayer)
         {
@@ -43,8 +51,17 @@ public class PlayerMovement : NetworkBehaviour
     [ServerRpc]
     public void MovementServerRPC(float horizontal, float vertical)
     {
-        this.horizontal = horizontal;
-        this.vertical = vertical;
+        if (GameManager.Instance._state.Value == 1)
+        {
+            this.horizontal = horizontal;
+            this.vertical = vertical;
+        }
+        else
+        {
+            this.horizontal = 0;
+            this.vertical = 0;
+        }
+
     }
 
     private void FixedUpdate()

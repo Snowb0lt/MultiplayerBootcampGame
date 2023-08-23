@@ -4006,7 +4006,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd69ff6d50a8304881689d22c2f61fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state:
+    m_InternalValue: 0
+  startPositions:
+  - {fileID: 2068286172}
+  - {fileID: 1290542150}
+  - {fileID: 1315362466}
+  - {fileID: 60067343}
   _playerNameField: {fileID: 117489017}
+  _scoreUI: {fileID: 546531359}
+  _endGameScreen: {fileID: 1035143983}
+  _endGameMessage: {fileID: 1462356574}
 --- !u!1 &1220279048
 GameObject:
   m_ObjectHideFlags: 0
@@ -5826,7 +5836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1921803953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6226,9 +6236,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 96.001, y: 323.39}
+  m_AnchoredPosition: {x: 16.001038, y: 64}
   m_SizeDelta: {x: 160, y: 31}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &2069303120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6273,7 +6283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1150864500}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1

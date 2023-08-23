@@ -24,7 +24,7 @@ public class PlayerInfo : NetworkBehaviour
     }
     public override void OnNetworkSpawn()
     {
-        playerName.OnValueChanged += OnNameChanged;
+        playerName.OnValueChanged += OnNameChanged; //Subscribe
 
         _txtPlayerName.SetText(playerName.Value.ToString());
         gameObject.name = "Player_" + playerName.Value.ToString();
@@ -33,10 +33,12 @@ public class PlayerInfo : NetworkBehaviour
         {
             GameManager.Instance.SetLocalPlayer(NetworkObject);
         }
+
+        GameManager.Instance.OnPlayerJoined(NetworkObject);
     }
     public override void OnNetworkDespawn()
     {
-        playerName.OnValueChanged -= OnNameChanged;
+        playerName.OnValueChanged -= OnNameChanged; //Unsubscribe
     }
 
     private void OnNameChanged(FixedString64Bytes previousValue, FixedString64Bytes newValue)
@@ -44,6 +46,7 @@ public class PlayerInfo : NetworkBehaviour
         if (newValue != previousValue)
         {
             _txtPlayerName.SetText(newValue.Value);
+            GameManager.Instance.SetPlayerName(NetworkObject, newValue.Value.ToString() );  
         }
     }
 }
