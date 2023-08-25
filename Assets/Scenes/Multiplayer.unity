@@ -4312,7 +4312,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
-    ServerListenAddress: 127.0.0.1
+    ServerListenAddress: 0.0.0.0
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
@@ -4329,7 +4329,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14d55b23abca844996c83900a25bb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxConnections: 4
   _statusTxt: {fileID: 933985007}
+  _btnClient: {fileID: 106460485}
+  _btnHost: {fileID: 648015421}
+  _playerIDText: {fileID: 1021700246}
+  _joinCodeText: {fileID: 1667105855}
 --- !u!1 &1315362465
 GameObject:
   m_ObjectHideFlags: 0
