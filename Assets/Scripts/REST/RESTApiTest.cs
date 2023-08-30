@@ -9,9 +9,12 @@ public class RESTApiTest : MonoBehaviour
 {
     [SerializeField] private TMP_InputField _inputUserName;
     [SerializeField] private TMP_InputField _inputUserPassword;
+    [SerializeField] private TMP_InputField _inputUserScore;
 
     [SerializeField] private TMP_Text _userNameTxt;
     [SerializeField] private GameObject _registerPanel;
+    [SerializeField] private Transform _scoreBoard;
+    [SerializeField] private GameObject _highScoreElement;
 
     [SerializeField] private GameObject _buttonRegister;
     [SerializeField] private GameObject _buttonLogin;
@@ -31,6 +34,27 @@ public class RESTApiTest : MonoBehaviour
         StartCoroutine(LoginUser(_inputUserName.text, _inputUserPassword.text));
         _buttonRegister.SetActive(false);
         _buttonLogin.SetActive(false);
+    }
+
+    public void SubmitScoreCall()
+    {
+        StartCoroutine(SubmitScore(int.Parse(_inputUserScore.text)));
+    }
+
+    public void UpdateScoreboardCall()
+    {
+        StartCoroutine(UpdateScoreboard());
+    }
+
+    public void LogOut()
+    {
+        //Delete the token
+        PlayerPrefs.DeleteKey("TOKEN");
+
+        //Show Login UI
+        _registerPanel.SetActive(true);
+        _buttonRegister.SetActive(true);
+        _buttonLogin.SetActive(true);
     }
     IEnumerator TestAPI()
     {
@@ -89,5 +113,64 @@ public class RESTApiTest : MonoBehaviour
 
         //Hide Login UI
         _registerPanel.SetActive(false);
+    }
+
+    IEnumerator SubmitScore(int score)
+    {
+        //Create Score Object
+        Score scoreData = new Score();
+        scoreData.score = score;
+
+        string dataToUpload = JsonUtility.ToJson(scoreData);
+
+        UnityWebRequest submitScoreRequest = UnityWebRequest.Post("https://bootcamp-restapi-practice.xrcourse.com/submit-score", dataToUpload, "application/json");
+
+        //Add the auth header
+        submitScoreRequest.SetRequestHeader("Authorization", PlayerPrefs.GetString("TOKEN"));
+
+        yield return submitScoreRequest.SendWebRequest();
+
+        Debug.Log($"Response code is: {submitScoreRequest.responseCode}");
+        Debug.Log($"Response error is: {submitScoreRequest.error}");
+        Debug.Log($" {submitScoreRequest.downloadHandler.text}");
+
+        
+        //Update the highscore UI
+        UpdateScoreboardCall();
+    }
+
+    IEnumerator UpdateScoreboard()
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get("https://bootcamp-restapi-practice.xrcourse.com/top-scores");
+
+        yield return webRequest.SendWebRequest();
+
+        Debug.Log($"Response code is: {webRequest.responseCode}");
+        Debug.Log($"Response error is: {webRequest.error}");
+        Debug.Log($" {webRequest.downloadHandler.text}");
+
+        //Use escape characters to create a JSON using an array response
+        string highScores = $"{{\"highScores\": {webRequest.downloadHandler.text}}}";
+
+        HighScore topScores = JsonUtility.FromJson<HighScore>(highScores);
+
+        //Iterate through the array and update the list of highScores
+        for (int i = 0; i < topScores.highScores.Length; i++)
+        {
+            Transform highScoreElement;
+            if (i < _scoreBoard.childCount)
+            {
+                highScoreElement = _scoreBoard.GetChild(i);
+            }
+            else
+            {
+                highScoreElement = Instantiate(_highScoreElement, _scoreBoard).transform;
+            }
+
+            //Update the element data
+            highScoreElement.GetChild(0).GetComponent<TMP_Text>().text = (i+1).ToString();   //Rank
+            highScoreElement.GetChild(1).GetComponent<TMP_Text>().text = topScores.highScores[i].username; //Username  
+            highScoreElement.GetChild(2).GetComponent<TMP_Text>().text = topScores.highScores[i].highScore.ToString(); //HighScore  
+        }
     }
 }
