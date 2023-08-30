@@ -10,6 +10,9 @@ public class RESTApiTest : MonoBehaviour
     [SerializeField] private TMP_InputField _inputUserName;
     [SerializeField] private TMP_InputField _inputUserPassword;
 
+    [SerializeField] private TMP_Text _userNameTxt;
+    [SerializeField] private GameObject _registerPanel;
+
     [SerializeField] private GameObject _buttonRegister;
     [SerializeField] private GameObject _buttonLogin;
     // Start is called before the first frame update
@@ -21,6 +24,13 @@ public class RESTApiTest : MonoBehaviour
     {
         StartCoroutine(RegisterUser(_inputUserName.text, _inputUserPassword.text));
         _buttonRegister.SetActive(false);
+    }
+
+    public void LoginUserCall()
+    {
+        StartCoroutine(LoginUser(_inputUserName.text, _inputUserPassword.text));
+        _buttonRegister.SetActive(false);
+        _buttonLogin.SetActive(false);
     }
     IEnumerator TestAPI()
     {
@@ -51,7 +61,33 @@ public class RESTApiTest : MonoBehaviour
         Debug.Log($" {registerUserRequest.downloadHandler.text}");
 
         //If there are no errors, login the user
-        //TO DO: Call Login User Coroutine
+        StartCoroutine(LoginUser(username,password));
 
+    }
+
+    IEnumerator LoginUser(string username, string password)
+    {
+        User user = new User();
+        user.username = username;
+        user.password = password;
+
+        string dataToUpload = JsonUtility.ToJson(user);
+
+        UnityWebRequest loginUserRequest = UnityWebRequest.Post("https://bootcamp-restapi-practice.xrcourse.com/login", dataToUpload, "application/json");
+
+        yield return loginUserRequest.SendWebRequest();
+
+        Debug.Log($"Response code is: {loginUserRequest.responseCode}");
+        Debug.Log($"Response error is: {loginUserRequest.error}");
+        Debug.Log($" {loginUserRequest.downloadHandler.text}");
+
+        //If the login is successful, save the token to player prefs
+        Login loginData = JsonUtility.FromJson<Login>(loginUserRequest.downloadHandler.text);
+
+        PlayerPrefs.SetString("TOKEN", loginData.token);
+        _userNameTxt.text = username;
+
+        //Hide Login UI
+        _registerPanel.SetActive(false);
     }
 }
