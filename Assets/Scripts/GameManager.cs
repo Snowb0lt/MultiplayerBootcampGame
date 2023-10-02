@@ -26,9 +26,13 @@ public class GameManager : NetworkBehaviour
         Instance = this;
     }
 
+    Dictionary<ulong, Color> _colors = new Dictionary<ulong, Color>()
+    {
 
+    };
 
     Dictionary<ulong, string> playerNames = new Dictionary<ulong, string>();
+
     Dictionary<ulong, int> playerScores = new Dictionary<ulong, int>();
 
     [SerializeField] private Transform[] startPositions;
@@ -89,6 +93,20 @@ public class GameManager : NetworkBehaviour
         else
         {
             playerNames.Add(playerObject.OwnerClientId, name);
+        }
+    }
+
+    //Change Player Colour
+
+    public void SetPlayerColour(NetworkObject playerObject, Color colour)
+    {
+        if (_colors.ContainsKey(playerObject.OwnerClientId))
+        {
+            _colors[playerObject.OwnerClientId] = colour;
+        }
+        else
+        {
+            _colors.Add(playerObject.OwnerClientId, colour);
         }
     }
 
@@ -186,7 +204,8 @@ public class GameManager : NetworkBehaviour
 
         playerObject.transform.position = startPositions[(int)playerId].position;
     }
-  
+
+
 }
 [System.Serializable]
 public class PlayerScores
