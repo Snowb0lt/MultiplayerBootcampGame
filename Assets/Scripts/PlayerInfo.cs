@@ -32,14 +32,19 @@ public class PlayerInfo : NetworkBehaviour
         _colourDropdown = GameObject.FindWithTag("Dropdown");
     }
 
-    private void Start()
-    {
-        SetColor();
-    }
+    //private void Start()
+    //{
+    //    SetColor();
+    //}
 
     public void SetName(string name)
     {
         playerName.Value = new FixedString64Bytes(name);
+    }
+
+    public void SetColour(Color color)
+    {
+        playerColor.Value = color;
     }
     public override void OnNetworkSpawn()
     {
@@ -47,6 +52,10 @@ public class PlayerInfo : NetworkBehaviour
 
         _txtPlayerName.SetText(playerName.Value.ToString());
         gameObject.name = "Player_" + playerName.Value.ToString();
+        
+        playerColor.OnValueChanged += OnColourChanged; //subscribe
+
+        _playerMesh.material.color = playerColor.Value;
 
         if (IsLocalPlayer)
         {
@@ -68,29 +77,12 @@ public class PlayerInfo : NetworkBehaviour
             GameManager.Instance.SetPlayerName(NetworkObject, newValue.Value.ToString());  
         }
     }
-    private void SetColor()
+    private void OnColourChanged(Color previousValue, Color newValue)
     {
-        int val = TankColour._instance.colourSelectNumber;
-        if (val == 0)
+        if (newValue != previousValue)
         {
-            _playerMesh.material.color = Color.red;
+            _playerMesh.material.color = newValue;
+            GameManager.Instance.SetPlayerColour(NetworkObject, newValue);
         }
-        if (val == 1)
-        {
-            _playerMesh.material.color = Color.blue;
-        }
-        if (val == 2)
-        {
-            _playerMesh.material.color = Color.green;
-        }
-        if (val == 3)
-        {
-            _playerMesh.material.color = Color.white;
-        }
-        if (val == 4)
-        {
-            _playerMesh.material.color = Color.black;
-        }
-        GameManager.Instance.SetPlayerColour(NetworkObject, _playerMesh.material.color);
     }
 }

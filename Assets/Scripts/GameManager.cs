@@ -57,7 +57,7 @@ public class GameManager : NetworkBehaviour
     {
         _localPlayer = localPlayer;
 
-        if(_playerNameField.text.Length > 0)
+        if (_playerNameField.text.Length > 0)
         {
             _localPlayer.GetComponent<PlayerInfo>().SetName(_playerNameField.text);
         }
@@ -65,8 +65,42 @@ public class GameManager : NetworkBehaviour
         {
             _localPlayer.GetComponent<PlayerInfo>().SetName($"Player-{_localPlayer.OwnerClientId}");
         }
-
+        ChoosePlayerColor();
         _playerNameField.gameObject.SetActive(false);
+    }
+
+    private void ChoosePlayerColor()
+    {
+        Color color = new Color();
+        color = PickColour(color);
+        _localPlayer.GetComponent<PlayerInfo>().SetColour(color);
+    }
+
+    private static Color PickColour(Color color)
+    {
+        int val = TankColour._instance.colourSelectNumber;
+        if (val == 0)
+        {
+            color = Color.red;
+        }
+        if (val == 1)
+        {
+            color = Color.blue;
+        }
+        if (val == 2)
+        {
+            color = Color.green;
+        }
+        if (val == 3)
+        {
+            color = Color.white;
+        }
+        if (val == 4)
+        {
+            color = Color.black;
+        }
+
+        return color;
     }
 
     //Will be called by Player Info of each Player in Game
@@ -76,6 +110,7 @@ public class GameManager : NetworkBehaviour
         //Assign Start Position to Player
         playerObject.transform.position = startPositions[(int)playerObject.OwnerClientId].position;
         playerScores.Add(playerObject.OwnerClientId, 0);
+        ChoosePlayerColor();
     }
 
     public void StartGame()
